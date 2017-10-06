@@ -1,0 +1,43 @@
+Finding factorial of large numbers in Java using BigInteger 
+The factorial of numbers greater than or equal to 13 cannot be found using the program shown on this page due to overflow. These factorials are too large to fit in an int variable. Even if we use the long data type, factorials greater than or equal to 21 will generate an overflow. To find the factorial of arbitrarily large numbers, we use the BigInteger class which is a part of the java.math package. 
+
+Given below is the program to find factorial using the BigInteger. The explanation of the program follows it. 
+
+import java.math.BigInteger;
+import java.util.Scanner;
+
+public class Factorial2 {
+
+   public static void main(String[] args) {
+       Scanner s = new Scanner(System.in);
+       System.out.print("Enter a number: ");
+       int n = s.nextInt();
+       String fact = factorial(n);
+       System.out.println("Factorial is " + fact);
+   }
+
+   public static String factorial(int n) {
+       BigInteger fact = new BigInteger("1");
+       for (int i = 1; i <= n; i++) {
+           fact = fact.multiply(new BigInteger(i + ""));
+       }
+       return fact.toString();
+   }
+}
+
+The BigInteger class is used to represent arbitrarily large numbers. Overflow doesn't occur as is the case with int and long. A BigInteger object is created by passing a String which contains an integer value. We have created a BigInteger object named 'fact' which will hold the factorial of the number and initialised it with 1. 
+
+BigInteger fact = new BigInteger("1");
+
+The loop that follows is identical to the one we use in a normal factorial program. Multiplication of two BigIntegers is performed using the multiply function which takes a BigInteger as an argument. The BigInteger class is immutable which means that the object on which the multiply function was invoked doesn't change the integer it is holding. The multiplication is performed and a new BigInteger is returned which needs to be stored in the variable fact. 
+
+fact = fact.multiply(new BigInteger(i + ""));
+
+If the following statement is used instead of the above line, the programs always returns one as the answer. 
+
+fact.multiply(new BigInteger(i + ""));
+
+This is because, we have initialised fact with '1'. The multiplication has no effect on the integr value stored in fact since the object returned by multiply() was not stored back in fact. Even after the end of the loop, fact still holds the value '1'. Here is a sample execution of the program. 
+
+Enter a number: 34
+Factorial is 295232799039604140847618609643520000000
